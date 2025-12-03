@@ -7,8 +7,11 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copy the repository (filtered by .dockerignore) into the web root.
 COPY . /usr/share/nginx/html
 
-# Surface the favicon at the expected root path for browsers.
-RUN cp /usr/share/nginx/html/public/favicon.ico /usr/share/nginx/html/favicon.ico
+# Surface favicons from repository root for legacy paths.
+RUN cp /usr/share/nginx/html/favicon.ico /usr/share/nginx/html/public/favicon.ico || true \
+ && cp /usr/share/nginx/html/favicon-180x180.png /usr/share/nginx/html/public/favicon-180x180.png || true \
+ && cp /usr/share/nginx/html/favicon-192x192.png /usr/share/nginx/html/public/favicon-192x192.png || true \
+ && cp /usr/share/nginx/html/favicon-512x512.png /usr/share/nginx/html/public/favicon-512x512.png || true
 
 EXPOSE 80
 
